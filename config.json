@@ -1,0 +1,84 @@
+{
+  "global": {
+    "max_failures": 3,
+    "timeout": 10.0,
+    "check_interval_seconds": 60,
+    "startup_grace_period_seconds": 300,
+    "check_updates": true
+  },
+  "servers": [
+    {
+      "name": "Gmod server 1",
+      "ip": "1.1.1.1",
+      "port": 27017,
+      "ptero_url": "https://pterodactyl.yourwebsite.net",
+      "server_id": "deb9d6f3-db52-4578-ae8e-AAAAAAAAAAAA",
+      "api_key": "ptlc_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "app_id": 22XXXX
+    },
+    {
+      "name": "Gmod server 2",
+      "ip": "1.1.1.1",
+      "port": 27015,
+      "ptero_url": "https://pterodactyl.yourwebsite.net",
+      "server_id": "deb9d6f3-db52-4578-ae8e-AAAAAAAAAAAA",
+      "api_key": "ptlc_L0wFb3ZMZT7qxOe5klUze99YEB0zDW5KsHiFjT30i8g",
+      "app_id": 22XXXX
+	  "check_updates": false 
+    },
+    {
+      "name": "Team Fortress 2 server 1",
+      "ip": "1.1.1.1",
+      "port": 27015,
+      "ptero_url": "https://pterodactyl.yourwebsite.net",
+      "server_id": "deb9d6f3-db52-4578-ae8e-AAAAAAAAAAAA",
+      "api_key": "ptlc_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "app_id": 22XXXX
+	  "check_updates": false 
+    },
+    {
+      "name": "Team Fortress 2 server 2",
+      "ip": "1.1.1.1",
+      "port": 27025,
+      "ptero_url": "https://pterodactyl.yourwebsite.net",
+      "server_id": "deb9d6f3-db52-4578-ae8e-AAAAAAAAAAAA",
+      "api_key": "ptlc_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "app_id": 22XXXX
+    },
+	{
+      "name": "Sven Co-op",
+      "ip": "1.1.1.1",
+      "port": 27016,
+      "ptero_url": "https://pterodactyl.yourwebsite.net",
+      "server_id": "deb9d6f3-db52-4578-ae8e-AAAAAAAAAAAA",
+      "api_key": "ptlc_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "app_id": 22XXXX
+	 },
+	 {
+      "name": "Left 4 Dead 2",
+      "ip": "1.1.1.1",
+      "port": 27024,
+      "ptero_url": "https://pterodactyl.yourwebsite.net",
+      "server_id": "deb9d6f3-db52-4578-ae8e-AAAAAAAAAAAA",
+      "api_key": "ptlc_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "app_id": 22XXXX
+	 },
+	 {
+      "name": "Half-Life 2: Team Deathmatch",
+      "ip": "1.1.1.1",
+      "port": 27026,
+      "ptero_url": "https://pterodactyl.yourwebsite.net",
+      "server_id": "deb9d6f3-db52-4578-ae8e-AAAAAAAAAAAA",
+      "api_key": "ptlc_AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "app_id": 22XXXX
+	 },
+	 {
+      "name": "Half-Life 2: Deathmatch",
+      "ip": "1.1.1.1",
+      "port": 27028,
+      "ptero_url": "https://pterodactyl.yourwebsite.net",
+      "server_id": "deb9d6f3-db52-4578-ae8e-AAAAAAAAAAAA",
+      "app_id": 22XXXX
+	 }
+  ]
+}
