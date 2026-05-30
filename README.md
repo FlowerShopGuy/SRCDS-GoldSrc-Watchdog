@@ -26,7 +26,7 @@ The script dynamically reloads this file every cycle. You can add, remove, or tu
       "name": "Garry's Mod TTT Server",
       "ip": "93.84.96.73",
       "port": 27017,
-      "ptero_url": "[https://pterodactyl.yourdomain.net](https://pterodactyl.yourdomain.net)",
+      "ptero_url": "https://pterodactyl.yourdomain.net",
       "server_id": "e4f1627d",
       "api_key": "ptlc_YourClientApiKeyHere...",
       "app_id": 4000,
@@ -36,7 +36,7 @@ The script dynamically reloads this file every cycle. You can add, remove, or tu
       "name": "Synergy Co-op EU",
       "ip": "93.84.96.73",
       "port": 27015,
-      "ptero_url": "[https://pterodactyl.yourdomain.net](https://pterodactyl.yourdomain.net)",
+      "ptero_url": "https://pterodactyl.yourdomain.net",
       "server_id": "aa3a2661",
       "api_key": "ptlc_YourClientApiKeyHere...",
       "app_id": 17525
