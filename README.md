@@ -5,8 +5,7 @@ A lightweight, centralized Python automation tool running as a standalone server
 ## How It Works
 
 1. **Crash Recovery (A2S Protocol):** Game servers running heavy Lua scripts or custom plugins can freeze completely without killing the OS process. Pterodactyl natively only tracks the PID, meaning frozen servers look "Online" in the panel. This script uses the **Source Engine Query Protocol (A2S)** to poll the game port. If a server stops responding, it issues a hard `KILL` and then a `START` command via the Pterodactyl Client API.
-2. **Automated Updates (Steam Web API):** The script extracts the active version string from your running server and checks it directly against Valve's master servers. If a patch is pushed and your server falls behind, the script terminates it safely and boots it up again. Pterodactyl's native **"Update on Start"** mechanism intercepts the boot sequence, hooks up SteamCMD, downloads the update, and launches the patch.
-
+2. **Update Automation (Version Checking):** The script extracts the active version string from your running server and checks it directly against Valve's master servers via the Steam Web API. If a patch is pushed and your server falls behind, the script simply **restarts the server container**. If your game server container is configured to update on startup (e.g., via SteamCMD on boot), it will automatically pull the latest patch and launch fully updated.
 ---
 
 ## Configuration (`config.json`)
