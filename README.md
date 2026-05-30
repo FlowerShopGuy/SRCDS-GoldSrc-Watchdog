@@ -1,6 +1,6 @@
 # SRCDS & GoldSrc Multi-Server Watchdog + Auto-Updater
 
-A lightweight, centralized Python automation tool running as a standalone server inside **Pterodactyl Panel**. It constantly monitors your Valve game servers (Garry's Mod, Team Fortress 2, Counter-Strike 1.6, Synergy, etc.) across multiple local or remote nodes to recover them from crashes and handle automatic Steam updates cleanly.
+A lightweight, centralized Python automation tool running as a standalone server inside **Pterodactyl Panel**. It constantly monitors your Valve game servers (Garry's Mod, Team Fortress 2, Counter-Strike 1.6, Synergy, etc.) across multiple local or remote nodes to recover them from freeze and handle automatic Steam updates cleanly.
 
 ## How It Works
 
