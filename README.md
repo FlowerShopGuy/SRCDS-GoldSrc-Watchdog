@@ -58,7 +58,7 @@ The script dynamically reloads this file every cycle. You can add, remove, or tu
 * **`name`** *(string)*: Identifier used solely for log output readability.
 * **`ip`** & **`port`** *(string/integer)*: Network coordinates of the target game instance.
 * **`ptero_url`** *(string)*: The root web address of your Pterodactyl panel installation.
-* **`server_id`** *(string)*: **Crucial:** The shorthand 8-character hash identifier assigned by Pterodactyl (found inside your browser's address bar when managing that server). Do *not* use full UUIDs here.
+* **`server_id`** *(string)*: **Crucial:** The shorthand 8-character hash identifier assigned by Pterodactyl (found inside your browser's address bar when managing that server). Or in your server panel: settengs > Debug Information > Server ID.
 * **`api_key`** *(string)*: Client API key generated inside the profile dashboard (*Account -> API Credentials*) of the user account managing the targets.
 * **`app_id`** *(integer)*: The exact Steam application ID (e.g., `4000` for Garry's Mod, `17525` for Synergy, `90` for CS 1.6). Required for update tracking.
 * **`check_updates`** *(boolean, optional)*: Overrides the global setting. Set to `false` if you want a specific instance to skip version validations while others continue updating.
