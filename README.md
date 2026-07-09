@@ -19,7 +19,8 @@ The script dynamically reloads this file every cycle. You can add, remove, or tu
     "timeout": 3.0,
     "check_interval_seconds": 60,
     "startup_grace_period_seconds": 300,
-    "check_updates": true
+    "check_updates": true,
+    "update_check_cycles": 10
   },
   "servers": [
     {
@@ -53,6 +54,7 @@ The script dynamically reloads this file every cycle. You can add, remove, or tu
 * **`check_interval_seconds`** *(integer)*: Interval between health-checks (e.g., checks all listed servers every 60 seconds).
 * **`startup_grace_period_seconds`** *(integer)*: A "hands-off" countdown applied right after sending a boot command. Gives games room to pull Workshop content, mount maps, or parse heavy files without being killed during startup.
 * **`check_updates`** *(boolean)*: Toggle to universally enable (`true`) or disable (`false`) Steam master version validation.
+* **`update_check_cycles`** *(integer)*: Number of cycles (where 1 cycle = `check_interval_seconds`) to wait before polling the Steam API for updates. For example, if `check_interval_seconds` is `60` and `update_check_cycles` is `10`, the script checks for updates every 10 minutes. This prevents Steam API rate limiting.
 
 #### Per-Server Settings (`servers`)
 * **`name`** *(string)*: Identifier used solely for log output readability.

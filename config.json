@@ -4,7 +4,8 @@
     "timeout": 3.0,
     "check_interval_seconds": 60,
     "startup_grace_period_seconds": 300,
-    "check_updates": true
+    "check_updates": true,
+    "update_check_cycles": 10
   },
   "servers": [
     {

@@ -12,8 +12,8 @@ def load_config():
     with open('config.json', 'r') as f:
         return json.load(f)
 
-def restart_server(server, reason="CRASH"):
-    """Always performs a hard KILL -> START sequence"""
+def restart_server(server, reason="CRASH", first_signal="kill"):
+    """Performs power action on the server via Pterodactyl API"""
     url = f"{server['ptero_url']}/api/client/servers/{server['server_id']}/power"
     headers = {
         "Authorization": f"Bearer {server['api_key']}",
@@ -22,17 +22,22 @@ def restart_server(server, reason="CRASH"):
     }
     
     try:
-        print(f"[{server['name']}] Sending KILL signal ({reason})...")
-        requests.post(url, json={"signal": "kill"}, headers=headers)
-        
-        # Wait 5 seconds to ensure the Wings daemon terminates the process
-        time.sleep(5)
-        
-        print(f"[{server['name']}] Sending START signal...")
-        resp = requests.post(url, json={"signal": "start"}, headers=headers)
+        if first_signal == "restart":
+            # Pterodactyl handles STOP -> START internally when sending 'restart'
+            print(f"[{server['name']}] Sending RESTART signal ({reason})...")
+            resp = requests.post(url, json={"signal": "restart"}, headers=headers)
+        else:
+            print(f"[{server['name']}] Sending {first_signal.upper()} signal ({reason})...")
+            requests.post(url, json={"signal": first_signal}, headers=headers)
+            
+            # Wait 10 seconds to ensure the Wings daemon processes the signal
+            time.sleep(10)
+            
+            print(f"[{server['name']}] Sending START signal...")
+            resp = requests.post(url, json={"signal": "start"}, headers=headers)
         
         if resp.status_code == 204:
-            print(f"[{server['name']}] Restart command successfully processed by panel.")
+            print(f"[{server['name']}] Power command successfully processed by panel.")
             return True
         else:
             print(f"[{server['name']}] API Error during start: {resp.status_code} - {resp.text}")
@@ -43,17 +48,32 @@ def restart_server(server, reason="CRASH"):
 
 def check_steam_update(app_id, current_version):
     """Checks Steam API to see if the current version is up to date"""
+    # Try the original app_id first
     try:
         url = f"https://api.steampowered.com/ISteamApps/UpToDateCheck/v1/?appid={app_id}&version={current_version}"
-        response = requests.get(url, timeout=5).json()
+        resp = requests.get(url, timeout=5).json()
+        if resp.get("response", {}).get("success"):
+            r = resp["response"]
+            return not r.get("up_to_date", True), r.get("required_version", current_version)
+    except Exception as e:
+        pass
+
+    # If it failed (e.g., dedicated server app_id), try getting the parent app_id
+    try:
+        steamcmd_url = f"https://api.steamcmd.net/v1/info/{app_id}"
+        info = requests.get(steamcmd_url, timeout=5).json()
+        parent_app_id = info.get("data", {}).get(str(app_id), {}).get("common", {}).get("parent")
         
-        if response.get("response", {}).get("success"):
-            is_updated = response["response"]["up_to_date"]
-            return not is_updated 
+        if parent_app_id:
+            url = f"https://api.steampowered.com/ISteamApps/UpToDateCheck/v1/?appid={parent_app_id}&version={current_version}"
+            resp = requests.get(url, timeout=5).json()
+            if resp.get("response", {}).get("success"):
+                r = resp["response"]
+                return not r.get("up_to_date", True), r.get("required_version", current_version)
     except Exception as e:
         print(f"[Steam API Error] Failed to check for updates: {e}")
     
-    return False
+    return False, current_version
 
 def main():
     config = load_config()
@@ -72,8 +92,9 @@ def main():
         except Exception as e:
             pass
 
-        # Check for updates every 10 cycles
-        check_updates_time = global_cfg.get('check_updates', False) and (update_check_counter % 10 == 0)
+        # Check for updates based on configured cycle count (default 10)
+        cycles = global_cfg.get('update_check_cycles', 10)
+        check_updates_time = global_cfg.get('check_updates', False) and (update_check_counter % cycles == 0)
 
         for server in config['servers']:
             sid = server['server_id']
@@ -99,10 +120,13 @@ def main():
                 
                 if check_updates_time and server_wants_updates and 'app_id' in server:
                     print(f"[{server['name']}] Checking for Steam updates...")
-                    if check_steam_update(server['app_id'], info.version):
-                        print(f"[{server['name']}] UPDATE AVAILABLE! Initiating hard restart for update...")
-                        if restart_server(server, reason="UPDATE"):
+                    needs_update, valve_version = check_steam_update(server['app_id'], info.version)
+                    if needs_update:
+                        print(f"[{server['name']}] UPDATE AVAILABLE! Server version: {info.version} | Valve version: {valve_version}")
+                        if restart_server(server, reason="UPDATE", first_signal="kill"):
                             last_restart[sid] = time.time()
+                    else:
+                        print(f"[{server['name']}] Up to date. Server version: {info.version} | Valve version: {valve_version}")
 
             except Exception as e:
                 failures[sid] += 1
